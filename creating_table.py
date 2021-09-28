@@ -1,5 +1,6 @@
 import mysql.connector as ms
 import time
+import os
 
 tim= time.localtime()
 
@@ -16,3 +17,12 @@ for i in range(1,dat):
 
 cursorObject.execute("use attendance;")
 cursorObject.execute(f"create table `{tim.tm_mon}`({a});")
+
+path = "./img_lear"
+image = []
+className = []
+mylist = os.listdir(path)
+for cls in mylist:
+    className.append(os.path.splitext(cls)[0])
+    cursorObject.execute(f"insert into `{tim.tm_mon}` (name) values(\"{os.path.splitext(cls)[0]}\");")
+    mydb.commit()
