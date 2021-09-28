@@ -22,7 +22,6 @@ for cls in mylist:
     curImg = cv2.imread(f'{path}/{cls}')
     image.append(curImg)
     className.append(os.path.splitext(cls)[0])
-    # cursorObject.execute(f"insert into haha (name) values(\"{os.path.splitext(cls)[0]}\");")
     am[os.path.splitext(cls)[0]] = 0
     mydb.commit()
 
@@ -48,7 +47,6 @@ def main():
     mydb1 = ms.connect(host="localhost", user="mimir", passwd="Mrin@l123")
     cursorObject1 = mydb1.cursor()
     cursorObject1.execute("use attendance;")
-    # am ={}
     tim = time.localtime()
 
     while True:
@@ -72,8 +70,6 @@ def main():
                 if matches[matchIndex]:
                     na=className[matchIndex]
                     name = className[matchIndex].upper()
-                    # am[name]=0
-                    #use global here
                     if am[na]==0: 
                         se="update `%s` set `%s`=\"1\" where name=\"%s\";"
                         cursorObject1.execute(se%(tim.tm_mon,tim.tm_mday,name))
@@ -91,6 +87,10 @@ def main():
 
             else:
                 cv2.putText(img,"attendance over",(0,0),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
+
+        else :
+            for i in am:
+                am[i]=0
 
 
 
